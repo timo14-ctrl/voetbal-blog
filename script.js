@@ -1,39 +1,38 @@
 const API_KEY = "123";
-const scoresDiv = document.getElementById("scores");
 
-fetch(`https://www.thesportsdb.com/api/v1/json/${API_KEY}/eventspastleague.php?id=4337`)
-  .then(response => response.json())
-  .then(data => {
-    scoresDiv.innerHTML = "";
-    data.events.slice(0, 5).forEach(match => {
-      scoresDiv.innerHTML += `
-        <div class="match">
-          <strong>${match.strHomeTeam}</strong>
-          ${match.intHomeScore} - ${match.intAwayScore}
-          <strong>${match.strAwayTeam}</strong><br>
-          <small>${match.dateEvent}</small>
-        </div>
-      `;
-    });
-  })
-  .catch(() => {
-    scoresDiv.innerHTML = "Uitslagen niet beschikbaar.";
-  });
-const newsDiv = document.getElementById("news");
+const competitions = [
+  { name: "Eredivisie", id: 4337 },
+  { name: "Premier League", id: 4328 },
+  { name: "La Liga", id: 4335 },
+  { name: "Bundesliga", id: 4331 },
+  { name: "Serie A", id: 4332 }
+];
 
-fetch(`https://www.thesportsdb.com/api/v1/json/${API_KEY}/latestsoccernews.php`)
-  .then(response => response.json())
-  .then(data => {
-    newsDiv.innerHTML = "";
-    data.news.slice(0, 5).forEach(item => {
-      newsDiv.innerHTML += `
-        <div class="match">
-          <strong>${item.strTitle}</strong><br>
-          <small>${item.strDescription}</small>
-        </div>
-      `;
+const competitionsDiv = document.getElementById("competitions");
+competitionsDiv.innerHTML = "";
+
+competitions.forEach(league => {
+  fetch(`https://www.thesportsdb.com/api/v1/json/${API_KEY}/eventspastleague.php?id=${league.id}`)
+    .then(response => response.json())
+    .then(data => {
+      if (!data.events) return;
+
+      let html = `<h3>${league.name}</h3>`;
+
+      data.events.slice(0, 5).forEach(match => {
+        html += `
+          <div class="match">
+            <strong>${match.strHomeTeam}</strong>
+            ${match.intHomeScore} - ${match.intAwayScore}
+            <strong>${match.strAwayTeam}</strong><br>
+            <small>${match.dateEvent}</small>
+          </div>
+        `;
+      });
+
+      competitionsDiv.innerHTML += html;
+    })
+    .catch(() => {
+      competitionsDiv.innerHTML += `<p>Kan ${league.name} niet laden.</p>`;
     });
-  })
-  .catch(() => {
-    newsDiv.innerHTML = "Nieuws niet beschikbaar.";
-  });
+});
