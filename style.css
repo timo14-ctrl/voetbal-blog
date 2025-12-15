@@ -19,10 +19,15 @@ section {
   background: white;
   margin-bottom: 20px;
   padding: 15px;
-  border-radius: 5px;
+  border-radius: 6px;
+}
+
+h3 {
+  margin-top: 30px;
+  color: #0b3d91;
 }
 
 .match {
   border-bottom: 1px solid #ddd;
-  padding: 10px 0;
+  padding: 8px 0;
 }
