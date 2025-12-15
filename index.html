@@ -8,21 +8,30 @@
 <body>
 
 <header>
-  <h1>⚽ Live-updates</h1>
-  <p>Live uitslagen & nieuws</p>
+  <h1>⚽ VOETBAL ACTUEEL</h1>
+  <p>Live uitslagen & voetbalnieuws</p>
 </header>
 
+<nav class="tabs">
+  <button class="tab active" onclick="showTab('scores')">Uitslagen</button>
+  <button class="tab" onclick="showTab('news')">Nieuws</button>
+</nav>
+
 <main>
-  <section>
-    <h2>📊 Laatste uitslagen</h2>
-    <div id="scores">Laden...</div>
+  <section id="scores" class="tab-content active">
+    <h2>📊 Laatste Uitslagen per Competitie</h2>
+    <div id="competitions">Laden...</div>
   </section>
 
-  <section>
+  <section id="news" class="tab-content">
     <h2>📰 Voetbalnieuws</h2>
-    <div id="news">Laden...</div>
+    <div id="newsContainer">Laden...</div>
   </section>
 </main>
+
+<footer>
+  <small>Data via TheSportsDB • Auto refresh elke 60 seconden</small>
+</footer>
 
 <script src="script.js"></script>
 </body>
